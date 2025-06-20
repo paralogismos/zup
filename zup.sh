@@ -6,7 +6,7 @@
 # if none exists.
 set -e
 
-zup_version=0.1.0
+zup_version=0.2.0
 zup_dir=$HOME/.zup
 bin_dir=$HOME/bin
 
