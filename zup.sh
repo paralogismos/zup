@@ -34,6 +34,16 @@ script_fail() {
     exit 2
 }
 
+check_version_num() {
+    if ! $(echo "$1" | grep -E [[:digit:]]+.[[:digit:]]+.[[:digit:]]+ > /dev/null) ;
+    then
+        script_fail "Not a version number" "$1"
+    elif ! $(echo "$zig_available_tc" | grep "$1" > /dev/null) ;
+    then
+        script_fail "Toolchain version not available" "$1"
+    fi
+}
+
 # Find available toolchains.
 zig_available_tc=$(find "$zup_dir" -maxdepth 1 -type d | grep "zig")
 if [ -z "$zig_available_tc" ] ;
@@ -66,17 +76,10 @@ case "$command" in
         done
         ;;
     * )
-        if ! $(echo "$command" | grep -E [[:digit:]]+.[[:digit:]]+.[[:digit:]]+ > /dev/null) ;
-        then
-            script_fail "Not a version number" "$command"
-        elif ! $(echo "$zig_available_tc" | grep "$command" > /dev/null) ;
-        then
-            script_fail "Toolchain version not available" "$command"
-        else
-            select_tc=$(echo "$zig_available_tc" | grep "$command")
-            if [ -f "$bin_dir/zig" ] ; then rm "$bin_dir/zig" ; fi
-            ln -s "$select_tc/zig" "$bin_dir/zig"
-        fi
+        check_version_num $command
+        select_tc=$(echo "$zig_available_tc" | grep "$command")
+        if [ -f "$bin_dir/zig" ] ; then rm "$bin_dir/zig" ; fi
+        ln -s "$select_tc/zig" "$bin_dir/zig"
         ;;
 esac
 
