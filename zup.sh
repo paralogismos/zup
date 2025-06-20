@@ -9,6 +9,7 @@ set -e
 zup_version=0.2.0
 zup_dir=$HOME/.zup
 bin_dir=$HOME/bin
+cur_ver=$(zig version)
 
 if ! [ -d "$zup_dir" ] ; then mkdir "$zup_dir" ; fi
 reset_dir="$PWD"
@@ -73,8 +74,11 @@ case "$command" in
         usage
         ;;
     list )
-        for tc in "$zig_available" ; do
-            printf "%s\n" "$tc"
+        printf "available Zig toolchains:\n"
+        for tc in $zig_available ; do
+            if [ "$tc" = "$cur_ver" ] ; then printf "> %s <\n" "$tc"
+            else printf "  %s\n" "$tc"
+            fi
         done
         ;;
     * )
