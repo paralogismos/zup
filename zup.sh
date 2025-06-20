@@ -11,7 +11,7 @@ zup_dir=$HOME/.zup
 bin_dir=$HOME/bin
 
 if ! [ -d "$zup_dir" ] ; then mkdir "$zup_dir" ; fi
-reset_dir=$(pwd)
+reset_dir="$PWD"
 cd "$zup_dir"
 
 usage() {
