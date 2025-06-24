@@ -15,6 +15,8 @@ if ! [ -d "$zup_dir" ] ; then mkdir "$zup_dir" ; fi
 reset_dir="$PWD"
 cd "$zup_dir"
 
+match_version='[[:digit:]]+.[[:digit:]]+.[[:digit:]]+'
+
 usage() {
     printf "zup version %s\n" $zup_version
     printf "\n"
@@ -36,7 +38,7 @@ script_fail() {
 }
 
 check_version_num() {
-    if ! $(echo "$1" | grep -E ^[[:digit:]]+.[[:digit:]]+.[[:digit:]]+ > /dev/null) ;
+    if ! $(echo "$1" | grep -E ^$match_version > /dev/null) ;
     then
         script_fail "Not a version number" "$1"
     elif ! $(echo "$zig_available_tc" | grep "$1" > /dev/null) ;
@@ -52,7 +54,7 @@ then
     script_fail "No Zig toolchains available" ""
 fi
 zig_available=$(echo "$zig_available_tc" |
-                    grep -Eo [[:digit:]]+.[[:digit:]]+.[[:digit:]]+.* |
+                    grep -Eo $match_version.* |
                     sort -t. -k 1,1nr -k 2,2nr -k 3,3nr -k 4,4nr)
 
 # Parse script commands.
