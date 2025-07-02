@@ -15,7 +15,7 @@ if ! [ -d "$zup_dir" ] ; then mkdir "$zup_dir" ; fi
 reset_dir="$PWD"
 cd "$zup_dir"
 
-match_version='[[:digit:]]+.[[:digit:]]+.[[:digit:]]+'
+match_version='[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+'
 
 usage() {
     printf "zup version %s\n" $zup_version
