@@ -42,10 +42,47 @@ Use `make distclean` to remove the `Makefile` and `config.status` files generate
 > After installation, running `make distclean` cancels the ability to remove `zup` by calling `make uninstall`. In this event the `zup` executable must be deleted manually.
 
 ## Using `zup`
+
+```none
+$ zup
+zup version 0.2.0
+
+Usage:
+zup [command]
+
+Commands:
+<version> ... Set active Zig toolchain
+list      ... Show available Zig toolchains
+help      ... Show this help screen
+```
+
 Zup creates the `.zup` directory in the user's home directory if it doesn't already exist.
 
 Zig tarballs should be unpacked in the `.zup` directory. Run `zup list` to show all available toolchains found in the `.zup` directory.
 
+```none
+$ zup list
+available Zig toolchains:
+  0.15.0-dev.847+850655f06
+> 0.14.1 <
+```
+
 Run `zup <version>` to set the global Zig version. The version number must begin with the form `a.b.c` which may be optionally followed by information to identify development versions. Run `zig version` to see the current Zig toolchain version.
+
+```none
+$ zig version
+0.14.1
+$ zup list
+available Zig toolchains:
+  0.15.0-dev.847+850655f06
+> 0.14.1 <
+$ zup 0.15.0
+$ zup list
+available Zig toolchains:
+> 0.15.0-dev.847+850655f06 <
+  0.14.1
+$ zig version
+0.15.0-dev.847+850655f06
+```
 
 Zup maintains a symbolic link to the current global Zig toolchain in the `bin` directory which was selected during configuration. By default this is the `/usr/local/bin` directory, but the `--bindir` option can be used to select another directory.
