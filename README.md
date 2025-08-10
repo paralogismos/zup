@@ -56,7 +56,7 @@ list      ... Show available Zig toolchains
 help      ... Show this help screen
 ```
 
-Zup creates the `.zup` directory in the user's home directory if it doesn't already exist.
+The first time that `zup` is run a `.zup` directory is created in the user's home directory if it doesn't already exist.
 
 Zig tarballs should be unpacked in the `.zup` directory. Run `zup list` to show all available toolchains found in the `.zup` directory.
 
